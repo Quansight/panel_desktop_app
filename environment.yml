@@ -1,0 +1,19 @@
+name: panel_desktop_app
+channels:
+  - conda-forge
+  - pyviz
+  - defaults
+
+dependencies:
+  - python=3.8
+  - pip
+  - panel
+  - holoviews
+  - bokeh
+  - pandas
+  - numpy
+  - jinja2==3.0.2
+  - pip:
+    - toga==0.3.0.dev32
+
+# conda env create --file environment.yml  
