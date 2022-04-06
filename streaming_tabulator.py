@@ -48,6 +48,10 @@ def panel_app():
 
     return app
 
+
+app = panel_app().servable()
+
+
 if __name__ == "__main__":
 
     main_app = panel_app()

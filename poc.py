@@ -1,5 +1,8 @@
+from curses import panel
+from importlib.resources import path
 import pathlib
 import sys
+import os
 
 import toga
 from toga.constants import COLUMN, ROW
@@ -18,7 +21,22 @@ class PanelWebView(toga.App):
     icon_zoom_reset = toga.icons.Icon(path="/Users/pierrot/dev/dev_python/Quansight/pycon2022/icons/ic_aspect_ratio_black_48dp.png")
     icon_reload = toga.icons.Icon(path="/Users/pierrot/dev/dev_python/Quansight/pycon2022/icons/ic_refresh_black_48dp.png")
 
-    
+    def __init__(self, *args, panel_app):
+        super().__init__(*args)
+
+        current_dir = os.path.dirname(os.path.realpath(__file__))
+        self._apps = {':' : pathlib.Path(current_dir) / pathlib.Path(panel_app)}
+
+        
+    def _show(self):
+        print("show", flush=True)
+        self.webview.url = f'http://localhost:{self.server.port}'
+
+    async def _start_panel_app(self, widget, **kwargs):
+        print("add panel app", flush=True)
+        self.server = pn.serve(self._apps, port=0, show=False)
+        self.server.io_loop.add_callback(self._show)
+        
 
     # This example exercises all the Toga 0.3 WebView methods.
     """
@@ -77,11 +95,13 @@ class PanelWebView(toga.App):
 
     def startup(self):
 
-        #self.on_exit = self.on_exit_callback
+        self.on_exit = self.on_exit_callback
 
         self.main_window = toga.MainWindow(title=self.name)
         self.top_label = toga.Label('www is loading |', style=Pack(flex=1, padding_left=10))
-        
+        self.add_background_task(self._start_panel_app)
+
+
         # self.math_button = toga.Button("2 + 2? ", on_press=self.do_math_in_js)
         # self.mutate_page_button = toga.Button("mutate page!", on_press=self.mutate_page)
         # self.set_content_button = toga.Button("set content!", on_press=self.set_content)
@@ -98,7 +118,7 @@ class PanelWebView(toga.App):
             style=Pack(flex=0, direction=ROW)
         )
         self.webview = toga.WebView(
-            url='http://localhost:8080/',
+            #url='http://localhost:8080/',
             on_key_down=self.on_webview_button_press,
             on_webview_load=self.on_webview_load,
             style=Pack(flex=1)
@@ -160,27 +180,19 @@ class PanelWebView(toga.App):
 
     
     def on_exit_callback(self, widget):
-        print("ON EXIT", widget)
-        confirmed = self.main_window.confirm_dialog("Confirm", f"Are you sure you want to close {self.app_name}")
+        confirmed = self.main_window.confirm_dialog("Confirm", f"Are you sure you want to close {self.app_name} ?")
         if confirmed:
-            sys.exit()
+            self.server.io_loop.stop()
+            self.server.stop()
+            sys.exit(0)
 
 
 
-def main():
-    return PanelWebView('POC Toga with Panel', 'org.beeware.widgets.webview', app_name="test")
+def main( panel_app ):
+    return PanelWebView('POC Toga with Panel', 'org.beeware.widgets.webview', "test", panel_app=panel_app)
 
-
-def start_panel_app():
-    print("start panel")
-    web_app = panel_app()
-    pn.serve(web_app,  port=8080, start=True, show=False, threaded=True)
-
-    
 
 if __name__ == '__main__':
 
-    start_panel_app()
-
-    gui_app = main()
+    gui_app = main(sys.argv[1])
     gui_app.main_loop()
