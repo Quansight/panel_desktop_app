@@ -1,4 +1,3 @@
-from curses import panel
 from importlib.resources import path
 import pathlib
 import sys
