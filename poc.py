@@ -11,20 +11,21 @@ import panel as pn
 
 from streaming_tabulator import panel_app
 
+_current_dir = os.path.dirname(os.path.realpath(__file__))
+
 class PanelWebView(toga.App):
 
     current_zoom = 1.0
 
-    icon_zoom_in = toga.icons.Icon(path="/Users/pierrot/dev/dev_python/Quansight/pycon2022/icons/ic_zoom_in_black_48dp.png")
-    icon_zoom_out = toga.icons.Icon(path="/Users/pierrot/dev/dev_python/Quansight/pycon2022/icons/ic_zoom_out_black_48dp.png")
-    icon_zoom_reset = toga.icons.Icon(path="/Users/pierrot/dev/dev_python/Quansight/pycon2022/icons/ic_aspect_ratio_black_48dp.png")
-    icon_reload = toga.icons.Icon(path="/Users/pierrot/dev/dev_python/Quansight/pycon2022/icons/ic_refresh_black_48dp.png")
+    icon_zoom_in = toga.icons.Icon(path=f"{_current_dir}/icons/ic_zoom_in_black_48dp.png")
+    icon_zoom_out = toga.icons.Icon(path=f"{_current_dir}/icons/ic_zoom_out_black_48dp.png")
+    icon_zoom_reset = toga.icons.Icon(path=f"{_current_dir}/icons/ic_aspect_ratio_black_48dp.png")
+    icon_reload = toga.icons.Icon(path=f"{_current_dir}/icons/ic_refresh_black_48dp.png")
 
     def __init__(self, *args, panel_app):
         super().__init__(*args)
 
-        current_dir = os.path.dirname(os.path.realpath(__file__))
-        self._apps = {':' : pathlib.Path(current_dir) / pathlib.Path(panel_app)}
+        self._apps = {':' : pathlib.Path(_current_dir) / pathlib.Path(panel_app)}
 
         
     def _show(self):
