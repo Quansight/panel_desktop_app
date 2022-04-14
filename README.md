@@ -13,11 +13,14 @@ This project demonstrates how to run the [streaming tabulator example from Panel
 conda env create -f environment.yml
 ```
 
-- **NEW** : Use [Toga:master](https://github.com/beeware/toga) and [Panel>=0.13.0rc05](https://github.com/holoviz/panel/tree/v0.13.0rc5)
-
+- **Important** : 
+  - Use [Panel>=0.13.0rc05](https://github.com/holoviz/panel/tree/v0.13.0rc5)
+  - To benefit from the last improvements on Windows, use [Toga:master](https://github.com/beeware/toga). Refer to [Toga's documentation](https://toga.readthedocs.io/en/latest/how-to/contribute.html) to install it.
+  
 
 - run the script 
 
 ```
+# python poc.py [panel app to run]
 python poc.py streaming_tabulator.py
 ```
