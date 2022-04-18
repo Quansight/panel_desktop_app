@@ -14,7 +14,7 @@ conda env create -f environment.yml
 ```
 
 - **Important** : 
-  - Use [Panel>=0.13.0rc05](https://github.com/holoviz/panel/tree/v0.13.0rc5)
+  - As stated in the `environment.yml` file, [Panel>=0.13.0](https://github.com/holoviz/panel/tree/v0.13.0) is required.
   - To benefit from the last improvements on Windows, use [Toga:master](https://github.com/beeware/toga). Refer to [Toga's documentation](https://toga.readthedocs.io/en/latest/how-to/contribute.html) to install it.
   
 
