@@ -147,7 +147,7 @@ class PanelWebView(toga.App):
         if confirmed:
             self.server.io_loop.stop()
             self.server.stop()
-            sys.exit(0)
+            self._impl.exit()
 
 
 def main( panel_app ):
