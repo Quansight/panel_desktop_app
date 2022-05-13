@@ -14,6 +14,4 @@ dependencies:
   - numpy
   - jinja2==3.0.2
   - pip:
-    - toga==0.3.0.dev32
-
-# conda env create --file environment.yml  
+    - toga==0.3.0.dev33

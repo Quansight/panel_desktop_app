@@ -138,7 +138,12 @@ class PanelWebView(toga.App):
 
     
     def on_exit_callback(self, widget):
-        confirmed = self.main_window.confirm_dialog("Confirm", f"Are you sure you want to close {self.app_name} ?")
+        self.main_window.confirm_dialog(title="Confirm", 
+                                        message=f"Are you sure you want to close {self.app_name} ?",
+                                        on_result=self.on_exit_confirm_callback)
+
+    def on_exit_confirm_callback(self, widget, confirmed):
+        
         if confirmed:
             self.server.io_loop.stop()
             self.server.stop()
